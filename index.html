@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #1a0a2e 0%, #0f051d 50%, #1a0a2e 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,14 +23,42 @@
         }
 
         .container {
-            background: rgba(22, 22, 40, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 30, 0.85);
+            backdrop-filter: blur(15px);
             padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7), 0 0 50px rgba(138, 43, 226, 0.2);
             max-width: 500px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(138, 43, 226, 0.05),
+                transparent
+            );
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container > * {
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -40,15 +68,17 @@
 
         .header h1 {
             font-size: 2rem;
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            background: linear-gradient(135deg, #ff6ec7, #a78bfa, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(255, 110, 199, 0.4);
+            filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.6));
         }
 
         .header p {
-            color: #b0b0b0;
+            color: #d0c5ff;
             font-size: 0.9rem;
         }
 
@@ -60,8 +90,8 @@
         .password-input {
             width: 100%;
             padding: 1rem 3rem 1rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(167, 139, 250, 0.3);
             border-radius: 12px;
             color: #ffffff;
             font-size: 1rem;
@@ -70,8 +100,9 @@
 
         .password-input:focus {
             outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            border-color: #a78bfa;
+            box-shadow: 0 0 25px rgba(167, 139, 250, 0.5);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .toggle-password {
@@ -88,7 +119,7 @@
         }
 
         .toggle-password:hover {
-            color: #00d4ff;
+            color: #a78bfa;
         }
 
         .strength-meter {
@@ -108,26 +139,26 @@
 
         .strength-bar.weak {
             width: 25%;
-            background: linear-gradient(90deg, #ff0040, #ff4444);
-            box-shadow: 0 0 10px #ff0040;
+            background: linear-gradient(90deg, #ff6ec7, #ff1493);
+            box-shadow: 0 0 15px #ff6ec7;
         }
 
         .strength-bar.fair {
             width: 50%;
-            background: linear-gradient(90deg, #ffea00, #ffa500);
-            box-shadow: 0 0 10px #ffea00;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            box-shadow: 0 0 15px #fbbf24;
         }
 
         .strength-bar.good {
             width: 75%;
-            background: linear-gradient(90deg, #00d4ff, #0099ff);
-            box-shadow: 0 0 10px #00d4ff;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            box-shadow: 0 0 15px #60a5fa;
         }
 
         .strength-bar.strong {
             width: 100%;
-            background: linear-gradient(90deg, #00ff88, #00cc6a);
-            box-shadow: 0 0 10px #00ff88;
+            background: linear-gradient(90deg, #a78bfa, #8b5cf6);
+            box-shadow: 0 0 15px #a78bfa;
         }
 
         .strength-text {
@@ -138,30 +169,30 @@
         }
 
         .strength-text.weak {
-            color: #ff0040;
-            text-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+            color: #ff6ec7;
+            text-shadow: 0 0 15px rgba(255, 110, 199, 0.6);
         }
 
         .strength-text.fair {
-            color: #ffea00;
-            text-shadow: 0 0 10px rgba(255, 234, 0, 0.5);
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
         }
 
         .strength-text.good {
-            color: #00d4ff;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            color: #60a5fa;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
         }
 
         .strength-text.strong {
-            color: #00ff88;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            color: #a78bfa;
+            text-shadow: 0 0 15px rgba(167, 139, 250, 0.6);
         }
 
         .requirements {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(167, 139, 250, 0.05);
             padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.2);
         }
 
         .requirement {
@@ -174,7 +205,7 @@
         }
 
         .requirement.met {
-            color: #00ff88;
+            color: #a78bfa;
         }
 
         .requirement-icon {
@@ -185,21 +216,21 @@
             align-items: center;
             justify-content: center;
             font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(167, 139, 250, 0.1);
+            border: 2px solid rgba(167, 139, 250, 0.3);
             transition: all 0.3s ease;
         }
 
         .requirement.met .requirement-icon {
-            background: #00ff88;
-            border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            background: #a78bfa;
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.7);
         }
 
         .stats {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(167, 139, 250, 0.2);
         }
 
         .stat-item {
@@ -211,16 +242,16 @@
         }
 
         .stat-value {
-            color: #00d4ff;
+            color: #a78bfa;
             font-weight: bold;
         }
 
         .crack-time {
             margin-top: 1.5rem;
             padding: 1rem;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(255, 110, 199, 0.1));
             border-radius: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid rgba(167, 139, 250, 0.4);
             text-align: center;
         }
 
@@ -233,14 +264,14 @@
         .crack-time-value {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #00d4ff;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            color: #a78bfa;
+            text-shadow: 0 0 15px rgba(167, 139, 250, 0.6);
         }
 
         .footer {
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(167, 139, 250, 0.2);
             text-align: center;
         }
 
@@ -251,18 +282,19 @@
         }
 
         .creator-name {
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            background: linear-gradient(135deg, #ff6ec7, #a78bfa, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: bold;
             font-size: 1rem;
+            filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
         }
 
         .creator-class {
-            color: #00d4ff;
+            color: #a78bfa;
             font-size: 0.85rem;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
         }
 
         @media (max-width: 600px) {
