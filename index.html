@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Security Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            background: rgba(22, 22, 40, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #00d4ff;
+        }
+
+        .strength-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .strength-bar.weak {
+            width: 25%;
+            background: linear-gradient(90deg, #ff0040, #ff4444);
+            box-shadow: 0 0 10px #ff0040;
+        }
+
+        .strength-bar.fair {
+            width: 50%;
+            background: linear-gradient(90deg, #ffea00, #ffa500);
+            box-shadow: 0 0 10px #ffea00;
+        }
+
+        .strength-bar.good {
+            width: 75%;
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .strength-bar.strong {
+            width: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .strength-text {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .strength-text.weak {
+            color: #ff0040;
+            text-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+        }
+
+        .strength-text.fair {
+            color: #ffea00;
+            text-shadow: 0 0 10px rgba(255, 234, 0, 0.5);
+        }
+
+        .strength-text.good {
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .strength-text.strong {
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .requirements {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        .requirement.met {
+            color: #00ff88;
+        }
+
+        .requirement-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .requirement.met .requirement-icon {
+            background: #00ff88;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .stats {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .crack-time {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            text-align: center;
+        }
+
+        .crack-time-label {
+            font-size: 0.8rem;
+            color: #b0b0b0;
+            margin-bottom: 0.5rem;
+        }
+
+        .crack-time-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .creator {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-bottom: 0.3rem;
+        }
+
+        .creator-name {
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .creator-class {
+            color: #00d4ff;
+            font-size: 0.85rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Password Security Checker</h1>
+            <p>Cek seberapa kuat password Anda</p>
+        </div>
+
+        <div class="input-group">
+            <input 
+                type="password" 
+                class="password-input" 
+                id="passwordInput" 
+                placeholder="Masukkan password Anda..."
+                autocomplete="off"
+            >
+            <button class="toggle-password" id="togglePassword">👁️</button>
+        </div>
+
+        <div class="strength-meter">
+            <div class="strength-bar" id="strengthBar"></div>
+        </div>
+
+        <div class="strength-text" id="strengthText">Masukkan password untuk mulai</div>
+
+        <div class="requirements">
+            <div class="requirement" id="reqLength">
+                <div class="requirement-icon">✓</div>
+                <span>Minimal 8 karakter</span>
+            </div>
+            <div class="requirement" id="reqUppercase">
+                <div class="requirement-icon">✓</div>
+                <span>Mengandung huruf besar (A-Z)</span>
+            </div>
+            <div class="requirement" id="reqLowercase">
+                <div class="requirement-icon">✓</div>
+                <span>Mengandung huruf kecil (a-z)</span>
+            </div>
+            <div class="requirement" id="reqNumber">
+                <div class="requirement-icon">✓</div>
+                <span>Mengandung angka (0-9)</span>
+            </div>
+            <div class="requirement" id="reqSpecial">
+                <div class="requirement-icon">✓</div>
+                <span>Mengandung karakter khusus (!@#$%)</span>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span>Panjang Password:</span>
+                <span class="stat-value" id="lengthStat">0</span>
+            </div>
+            <div class="stat-item">
+                <span>Tipe Karakter:</span>
+                <span class="stat-value" id="typeStat">0</span>
+            </div>
+        </div>
+
+        <div class="crack-time">
+            <div class="crack-time-label">Estimasi Waktu Crack:</div>
+            <div class="crack-time-value" id="crackTime">-</div>
+        </div>
+
+        <div class="footer">
+            <div class="creator">Created by</div>
+            <div class="creator-name">Satria A.P.P</div>
+            <div class="creator-class">X DKV 3</div>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('passwordInput');
+        const togglePassword = document.getElementById('togglePassword');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+        const lengthStat = document.getElementById('lengthStat');
+        const typeStat = document.getElementById('typeStat');
+        const crackTime = document.getElementById('crackTime');
+
+        const requirements = {
+            length: document.getElementById('reqLength'),
+            uppercase: document.getElementById('reqUppercase'),
+            lowercase: document.getElementById('reqLowercase'),
+            number: document.getElementById('reqNumber'),
+            special: document.getElementById('reqSpecial')
+        };
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+
+        passwordInput.addEventListener('input', (e) => {
+            const password = e.target.value;
+            checkPasswordStrength(password);
+        });
+
+        function checkPasswordStrength(password) {
+            if (password.length === 0) {
+                resetChecker();
+                return;
+            }
+
+            const checks = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+            };
+
+            Object.keys(checks).forEach(key => {
+                if (checks[key]) {
+                    requirements[key].classList.add('met');
+                } else {
+                    requirements[key].classList.remove('met');
+                }
+            });
+
+            const metCount = Object.values(checks).filter(Boolean).length;
+            let strength = 'weak';
+            let strengthLabel = 'Sangat Lemah';
+
+            if (metCount === 5) {
+                strength = 'strong';
+                strengthLabel = 'Sangat Kuat 💪';
+            } else if (metCount >= 4) {
+                strength = 'good';
+                strengthLabel = 'Kuat 👍';
+            } else if (metCount >= 3) {
+                strength = 'fair';
+                strengthLabel = 'Cukup ⚠️';
+            } else {
+                strength = 'weak';
+                strengthLabel = 'Lemah ❌';
+            }
+
+            strengthBar.className = `strength-bar ${strength}`;
+            strengthText.className = `strength-text ${strength}`;
+            strengthText.textContent = strengthLabel;
+
+            lengthStat.textContent = password.length;
+            typeStat.textContent = metCount;
+
+            calculateCrackTime(password, metCount);
+        }
+
+        function calculateCrackTime(password, metCount) {
+            const length = password.length;
+            let charset = 0;
+
+            if (/[a-z]/.test(password)) charset += 26;
+            if (/[A-Z]/.test(password)) charset += 26;
+            if (/[0-9]/.test(password)) charset += 10;
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) charset += 32;
+
+            const combinations = Math.pow(charset, length);
+            const attemptsPerSecond = 1000000000;
+            const seconds = combinations / attemptsPerSecond;
+
+            let timeString = '';
+
+            if (seconds < 1) {
+                timeString = 'Kurang dari 1 detik ⚠️';
+            } else if (seconds < 60) {
+                timeString = `${Math.round(seconds)} detik ⚠️`;
+            } else if (seconds < 3600) {
+                timeString = `${Math.round(seconds / 60)} menit ⚠️`;
+            } else if (seconds < 86400) {
+                timeString = `${Math.round(seconds / 3600)} jam`;
+            } else if (seconds < 2592000) {
+                timeString = `${Math.round(seconds / 86400)} hari`;
+            } else if (seconds < 31536000) {
+                timeString = `${Math.round(seconds / 2592000)} bulan`;
+            } else if (seconds < 3153600000) {
+                timeString = `${Math.round(seconds / 31536000)} tahun`;
+            } else {
+                timeString = 'Jutaan tahun 🔥';
+            }
+
+            crackTime.textContent = timeString;
+        }
+
+        function resetChecker() {
+            strengthBar.className = 'strength-bar';
+            strengthText.className = 'strength-text';
+            strengthText.textContent = 'Masukkan password untuk mulai';
+            lengthStat.textContent = '0';
+            typeStat.textContent = '0';
+            crackTime.textContent = '-';
+
+            Object.values(requirements).forEach(req => {
+                req.classList.remove('met');
+            });
+        }
+    </script>
+</body>
+</html>
