@@ -1,5 +1,5 @@
 # 🔐 Password-Checker  
-**🌸 Anime-Tech Password Strength Website by Satria -SXZnightmare**
+**🌸 Anime-Tech Password Strength Website by Satria-SXZnightmare**
 
 > *"Even the strongest heroes need strong passwords."* — 🔒  
 A simple yet beautiful website that checks your password strength — built with style, precision, and a touch of anime magic ✨
@@ -42,7 +42,7 @@ Terinspirasi dari dunia *anime cyber-security*, website ini menghadirkan kombina
 ![Preview](https://files.catbox.moe/ahc0uq.gif)
 
 Kamu bisa langsung coba versi live-nya di sini:  
-👉 **[Password Checker by Satria -SXZnightmare](https://shadow23734.github.io/Password-Checker)**  
+👉 **[Password Checker by Satria -SXZnightmare](https://github.com/shadow23734/Password-Checker)**  
 
 ---
 
@@ -66,8 +66,8 @@ Dibuat dengan keseimbangan antara **fungsi, estetika, dan pengalaman pengguna**.
 ---
 
 ## 👨‍💻 Author
-**Satria -SXZnightmare**  
-Creative FullStack Developer | Digital Designer | Aesthetic Coder  
+**Satria-SXZnightmare**  
+Creative FullStack Developer (maybe) | Digital Designer | Aesthetic Coder  
 
 > *Exploring creativity through code and visual design.*
 
@@ -79,6 +79,6 @@ Creative FullStack Developer | Digital Designer | Aesthetic Coder
 ---
 
 ## ⚖️ License
-MIT License © 2025 — Crafted with ❤️, ☕, and 🎧 by **Satria -SXZnightmare**
+MIT License © 2025 — Crafted with ❤️, ☕, and 🎧 by **Satria-SXZnightmare**
 
 ---
