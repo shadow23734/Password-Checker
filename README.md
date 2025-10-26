@@ -39,7 +39,7 @@ Terinspirasi dari dunia *anime cyber-security*, website ini menghadirkan kombina
 ---
 
 ## 🌈 Preview Website
-![Preview](https://files.catbox.moe/ahc0uq.gif)
+![Preview](https://qu.ax/racUw.jpg)
 
 Kamu bisa langsung coba versi live-nya di sini:  
 👉 **[Password Checker by Satria -SXZnightmare](https://github.com/shadow23734/Password-Checker)**  
